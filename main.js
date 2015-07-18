@@ -4,6 +4,7 @@ window.addEventListener('load', function (e) {
         timelineList = document.getElementById('timeline_list'),
         dataLength = data.length,
         posts = document.createDocumentFragment(),
+        currentData,
         post,
         dot,
         author,
@@ -15,27 +16,25 @@ window.addEventListener('load', function (e) {
     //Create posts
     for (i = 0; i < dataLength; i++) {
 
+        currentData = data[i];
+
         post = document.createElement('li');
         
         author = document.createElement('strong');
-        author.textContent = data[i].owner;
+        author.textContent = currentData.owner;
         post.appendChild(author);
 
         time = document.createElement('time');
-        time.textContent = data[i].date;
+        time.textContent = currentData.date;
         post.appendChild(time);
 
         content = document.createElement('p');
-        content.textContent = data[i].content;
+        content.textContent = currentData.content;
         post.appendChild(content);
 
-        if (data[i].comments) {
+        if (currentData.comments) {
             button = document.createElement('button');
-
-            button.textContent = 'comments (' + data[i].comments.length + ')';
-            button.addEventListener('click', function () {
-                alert('TODO - comment section');
-            });
+            button.textContent = 'comments (' + currentData.comments.length + ')';
             post.appendChild(button);
         }
 
@@ -45,6 +44,12 @@ window.addEventListener('load', function (e) {
 
         posts.appendChild(post);
     }
+
+    timelineList.addEventListener('click', function (e) {
+        if (e.target.tagName === 'BUTTON') {
+            alert('TODO - comment section');
+        }
+    }, false);
 
     timelineList.appendChild(posts);
     console.timeEnd('performance');
